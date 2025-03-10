@@ -1,16 +1,55 @@
 <html>
-  <title><%= title %></title>
+  <head>
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+    <title><%= title %></title>
+  </head>
+
   <body>
+    <main>
+      <section class="pokemonsContainer">
     <% if(locals.pokemons && locals.pokemons.length > 0) { %> <%
     pokemons.forEach(function(pokemon) { %>
     <div class="pokemonCard">
-      <img class="pokemonImage" width="100px" src="<%= pokemon.image %>" alt="<%= pokemon.name %>">
-      <li><%= pokemon.name %></li>
-      <li><%= pokemon.type %></li>
-      <% if(pokemon.type2) { %>
-      <li><%= pokemon.type2 %></li>
-      <% } %>
+      <img
+        class="pokemonImage"
+        src="<%= pokemon.image %>"
+        alt="<%= pokemon.name %>"
+      />
+      <h2><%= pokemon.name %></h2>
+      <div class="pokemonTypesContainer"><li class="pokemonType"><%= pokemon.type %></li>
+        <% if(pokemon.type2) { %>
+        <li class="pokemonType"><%= pokemon.type2 %></li>
+        <% } %></div>
+      
     </div>
     <% }) %> <% } %>
+  </section>
+
+    <h3>Add Pokemon</h3>
+    <form action="/pokemons/add" method="POST">
+      <label for="name">Name</label>
+      <input type="text" required name="name" id="name" />
+      <label for="type">Type</label>
+      <select name="type" id="type" required>
+        <% if(locals.pokemonTypes && locals.pokemonTypes.length > 0) { %> <%
+        pokemonTypes.forEach(function(type) { %>
+        <option value="<%= type.type %>"><%= type.type %></option>
+        <% }) %> <% } else { %>
+        <li>No pokemons found</li>
+        <% } %>
+      </select>
+      <label for="type2">Type 2 (if any)</label>
+      <select name="type2" id="type">
+        <option value="">None</option>
+        <% if(locals.pokemonTypes && locals.pokemonTypes.length > 0) { %> <%
+        pokemonTypes.forEach(function(type) { %>
+        <option value="<%= type.type %>"><%= type.type %></option>
+        <% }) %> <% } %>
+      </select>
+      <label for="image">Image</label>
+      <input type="text" name="image" required />
+      <button type="submit">Add</button>
+    </form>
+    </main>
   </body>
 </html>

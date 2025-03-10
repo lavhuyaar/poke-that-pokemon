@@ -1,9 +1,12 @@
 <html>
-  <title><%= title %></title>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+  </head>
   <body>
     <% if(locals.pokemonTypes && locals.pokemonTypes.length > 0) { %> <%
     pokemonTypes.forEach(function(pokemonType) { %>
-    <div class="pokemonTypeCard">
+    <div class="pokemonType">
       <li><%= pokemonType.type %></li>
     </div>
     <% }) %> <% } %>
