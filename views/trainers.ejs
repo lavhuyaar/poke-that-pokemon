@@ -1,0 +1,11 @@
+<html>
+  <title><%= title %></title>
+  <body>
+    <% if(locals.trainers && locals.trainers.length > 0) { %> <%
+    trainers.forEach(function(trainer) { %>
+    <div class="trainerCard">
+      <li><%= trainer.name %></li>
+    </div>
+    <% }) %> <% } %>
+  </body>
+</html>

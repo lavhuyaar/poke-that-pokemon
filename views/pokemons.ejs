@@ -1,0 +1,16 @@
+<html>
+  <title><%= title %></title>
+  <body>
+    <% if(locals.pokemons && locals.pokemons.length > 0) { %> <%
+    pokemons.forEach(function(pokemon) { %>
+    <div class="pokemonCard">
+      <img class="pokemonImage" width="100px" src="<%= pokemon.image %>" alt="<%= pokemon.name %>">
+      <li><%= pokemon.name %></li>
+      <li><%= pokemon.type %></li>
+      <% if(pokemon.type2) { %>
+      <li><%= pokemon.type2 %></li>
+      <% } %>
+    </div>
+    <% }) %> <% } %>
+  </body>
+</html>
