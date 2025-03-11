@@ -6,9 +6,20 @@
   <body>
     <% if(locals.pokemonTypes && locals.pokemonTypes.length > 0) { %> <%
     pokemonTypes.forEach(function(pokemonType) { %>
-    <div class="pokemonType">
-      <li><%= pokemonType.type %></li>
+    <div class="pokemonTypesContainer">
+      <li class="pokemonType"><%= pokemonType.type %></li>
+      <button class="pokemonTypeDeleteBtn">Delete</button>
     </div>
     <% }) %> <% } %>
+
+    <h3>Add Pokemon Type</h3>
+    <form action="/pokemon-types/add" method="POST">
+      <label for="type">Type:</label>
+      <input type="text" name="type" id="type" required />
+
+      <button type="submit">Add</button>
+    </form>
+
+    <a href="/">Go back to home page</a>
   </body>
 </html>

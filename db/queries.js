@@ -3,12 +3,16 @@ const pool = require("./pool");
 //Queries
 
 const getPokemons = async () => {
-  const { rows } = await pool.query("SELECT * FROM pokemons");
+  const { rows } = await pool.query(
+    "SELECT name, type, type2, image FROM pokemons GROUP BY name, type, type2, image ORDER BY name"
+  );
   return rows;
 };
 
 const getPokemonTypes = async () => {
-  const { rows } = await pool.query("SELECT * FROM pokemon_types");
+  const { rows } = await pool.query(
+    "SELECT type FROM pokemon_types GROUP BY type ORDER BY type"
+  );
   return rows;
 };
 
@@ -40,5 +44,5 @@ module.exports = {
   getTrainers,
   addPokemon,
   addTrainer,
-  addPokemonType
+  addPokemonType,
 };

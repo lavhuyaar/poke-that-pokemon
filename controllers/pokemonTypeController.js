@@ -7,3 +7,10 @@ exports.getAllPokemonTypes = async (req, res) => {
     pokemonTypes: pokemonTypes,
   });
 };
+
+//Adds Pokemon Type
+exports.createPokemonType = async (req, res) => {
+  const type = req.body.type;
+  await db.addPokemonType(type);
+  res.redirect("/pokemon-types");
+};

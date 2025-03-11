@@ -7,3 +7,9 @@ exports.getAllTrainers = async (req, res) => {
     trainers: trainers,
   });
 };
+
+exports.createTrainer = async (req, res) => {
+  const name = req.body.name;
+  await db.addTrainer(name);
+  res.redirect("/trainers");
+};
