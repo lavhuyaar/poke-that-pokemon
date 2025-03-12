@@ -8,7 +8,7 @@
     trainers.forEach(function(trainer) { %>
     <div class="trainerCard">
       <li><%= trainer.name %></li>
-      <button>Details</button>
+      <a href="/trainers/<%= trainer.name%>">Details</a>
       <button>Edit</button>
       <button>Delete</button>
     </div>

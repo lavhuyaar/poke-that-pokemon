@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <title><%= title %></title>
+  </head>
+  <body>
+    <form action="/pokemons/<%= pokemonDetails.name %>/edit" method="POST">
+      <label for="name">Name: </label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        required
+        value="<%= pokemonDetails.name %>"
+      />
+      <select name="type" id="type" required>
+        <% if(locals.options && options.length > 0) { %> <%
+        options.forEach(function(option) { %> <% if(option.type ===
+        pokemonDetails.type) { %>
+        <option value="<%= option.type %>" selected><%= option.type %></option>
+        <% } %>
+        <option value="<%= option.type %>"><%= option.type %></option>
+        <% }) %> <% } %>
+      </select>
+      <select name="type2" id="type2">
+        <option value="">None</option>
+        <% if(locals.options && options.length > 0) { %> <%
+        options.forEach(function(option) { %> <% if(option.type ===
+        pokemonDetails.type2) { %>
+        <option value="<%= option.type %>" selected><%= option.type %></option>
+        <% } %>
+        <option value="<%= option.type %>"><%= option.type %></option>
+        <% }) %> <% } %>
+      </select>
+      <label for="image">Image: </label>
+      <input
+        type="text"
+        name="image"
+        id="image"
+        required
+        value="<%= pokemonDetails.image %>"
+      />
+      <button type="submit">Edit</button>
+    </form>
+    <a href="/pokemons">Go back to Pokemons page</a>
+  </body>
+</html>

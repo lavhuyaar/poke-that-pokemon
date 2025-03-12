@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+  </head>
+  <body>
+    <form action="/trainers/<%= trainerName %>/edit" method="POST">
+      <label for="updatedName">Name :</label>
+      <input
+        type="text"
+        name="updatedName"
+        id="updatedName"
+        required
+        value="<%= trainerName %>"
+      />
+      <button type="submit">Edit</button>
+    </form>
+
+    <% {if(locals.details && details.length > 0) { %>
+    <h2>Pokemons caught by <%= trainerName %> :</h2>
+    <% details.forEach(function(trainer) { %>
+    <div class="pokemonCard">
+      <img
+        class="pokemonImage"
+        src="<%= trainer.pokemonimage %>"
+        alt="<%= trainer.pokemonname %>"
+      />
+      <h2><%= trainer.pokemonname %> (<%= trainer.count %>)</h2>
+      <div class="pokemonTypesContainer">
+        <li class="pokemontype"><%= trainer.pokemontype %></li>
+        <% if(trainer.pokemonType2) { %>
+        <li class="pokemontype"><%= trainer.pokemontype2 %></li>
+        <% } %>
+      </div>
+    </div>
+    <% }) %> <% }} %>
+
+    <form action="/trainers/<%= trainerName %>/addPokemon" method="POST">
+      <label for="pokemonName">Add Pokemon :</label>
+      <select name="pokemonName" id="pokemonName">
+        <% if(locals.pokemonOptions && pokemonOptions.length > 0) { %> <%
+        pokemonOptions.forEach(function(option) { %>
+        <option value="<%= option.name %>"><%= option.name %></option>
+        <% }) %> <% } %>
+      </select>
+      <button type="submit">Add</button>
+    </form>
+    <a href="/trainers">Go back to trainers page</a>
+  </body>
+</html>

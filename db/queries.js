@@ -38,6 +38,43 @@ const addPokemonType = async (type) => {
   await pool.query("INSERT INTO pokemon_types (type) VALUES ($1)", [type]);
 };
 
+const getPokemonDetails = async (name) => {
+  const { rows } = await pool.query(
+    "SELECT * FROM pokemons WHERE name = ($1)",
+    [name]
+  );
+  return rows[0];
+};
+
+const editPokemon = async (name, type, type2, image) => {
+  await pool.query(
+    "UPDATE pokemons SET type = ($1),type2 = ($2), image = ($3) WHERE name = ($4)",
+    [type, type2, image, name]
+  );
+};
+
+const getTrainerDetails = async (name) => {
+  const { rows } = await pool.query(
+    "SELECT COUNT(trainers.name), trainers.name AS trainerName, pokemons.name AS pokemonName, pokemons.type AS pokemonType, pokemons.type2 AS pokemonType2, pokemons.image AS pokemonImage FROM trainers INNER JOIN pokemons ON pokemons.name = trainers.pokemon WHERE trainers.name = ($1) GROUP BY trainers.name, trainers.pokemon, pokemons.name, pokemons.type, pokemons.type2, pokemons.image",
+    [name]
+  );
+  return rows;
+};
+
+const addPokemonToTrainer = async (name, pokemonName) => {
+  await pool.query("INSERT INTO trainers (name, pokemon) VALUES ($1, $2)", [
+    name,
+    pokemonName,
+  ]);
+};
+
+const editTrainer = async (name, newName) => {
+  await pool.query("UPDATE trainers SET name = ($1) WHERE name = ($2)", [
+    newName,
+    name,
+  ]);
+};
+
 module.exports = {
   getPokemons,
   getPokemonTypes,
@@ -45,4 +82,9 @@ module.exports = {
   addPokemon,
   addTrainer,
   addPokemonType,
+  getPokemonDetails,
+  editPokemon,
+  getTrainerDetails,
+  addPokemonToTrainer,
+  editTrainer,
 };
