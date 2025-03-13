@@ -2,23 +2,10 @@ const pool = require("./pool");
 
 //Queries
 
+//-------------POKEMON QUERIES-----------------
 const getPokemons = async () => {
   const { rows } = await pool.query(
     "SELECT name, type, type2, image FROM pokemons GROUP BY name, type, type2, image ORDER BY name"
-  );
-  return rows;
-};
-
-const getPokemonTypes = async () => {
-  const { rows } = await pool.query(
-    "SELECT type FROM pokemon_types GROUP BY type ORDER BY type"
-  );
-  return rows;
-};
-
-const getTrainers = async () => {
-  const { rows } = await pool.query(
-    "SELECT name FROM trainers GROUP BY name ORDER BY name"
   );
   return rows;
 };
@@ -30,12 +17,15 @@ const addPokemon = async (name, type, type2, image) => {
   );
 };
 
-const addTrainer = async (name) => {
-  await pool.query("INSERT INTO trainers (name) VALUES ($1)", [name]);
+const editPokemon = async (name, type, type2, image) => {
+  await pool.query(
+    "UPDATE pokemons SET type = ($1),type2 = ($2), image = ($3) WHERE name = ($4)",
+    [type, type2, image, name]
+  );
 };
-
-const addPokemonType = async (type) => {
-  await pool.query("INSERT INTO pokemon_types (type) VALUES ($1)", [type]);
+const removePokemon = async (name) => {
+  await pool.query("DELETE FROM trainers WHERE pokemon = ($1)", [name]);
+  await pool.query("DELETE FROM pokemons WHERE name = ($1)", [name]);
 };
 
 const getPokemonDetails = async (name) => {
@@ -46,11 +36,44 @@ const getPokemonDetails = async (name) => {
   return rows[0];
 };
 
-const editPokemon = async (name, type, type2, image) => {
-  await pool.query(
-    "UPDATE pokemons SET type = ($1),type2 = ($2), image = ($3) WHERE name = ($4)",
-    [type, type2, image, name]
+//-------------POKEMON TYPE QUERIES-----------------
+const getPokemonTypes = async () => {
+  const { rows } = await pool.query(
+    "SELECT type FROM pokemon_types GROUP BY type ORDER BY type"
   );
+  return rows;
+};
+
+const addPokemonType = async (type) => {
+  await pool.query("INSERT INTO pokemon_types (type) VALUES ($1)", [type]);
+};
+
+const removePokemonType = async (pokemonType) => {
+  await pool.query("DELETE FROM pokemon_types WHERE type = ($1)", [
+    pokemonType,
+  ]);
+  await pool.query(
+    " DELETE FROM trainers WHERE trainers.pokemon IN (SELECT name FROM pokemons WHERE type = ($1) OR type2 = ($1))",
+    [pokemonType]
+  );
+  await pool.query("DELETE FROM pokemons WHERE type = ($1) OR type2 = ($1)", [
+    pokemonType,
+  ]);
+};
+
+//-------------TRAINER QUERIES-----------------
+const getTrainers = async () => {
+  const { rows } = await pool.query(
+    "SELECT name FROM trainers GROUP BY name ORDER BY name"
+  );
+  return rows;
+};
+
+const addTrainer = async (name, pokemon) => {
+  await pool.query("INSERT INTO trainers (name, pokemon) VALUES ($1, $2)", [
+    name,
+    pokemon,
+  ]);
 };
 
 const getTrainerDetails = async (name) => {
@@ -75,6 +98,17 @@ const editTrainer = async (name, newName) => {
   ]);
 };
 
+const removePokemonFromTrainer = async (name, pokemonName) => {
+  await pool.query(
+    "DELETE FROM trainers WHERE name = ($1) AND pokemon = ($2)",
+    [name, pokemonName]
+  );
+};
+
+const removeTrainer = async (name) => {
+  await pool.query("DELETE FROM trainers WHERE name = ($1)", [name]);
+};
+
 module.exports = {
   getPokemons,
   getPokemonTypes,
@@ -87,4 +121,8 @@ module.exports = {
   getTrainerDetails,
   addPokemonToTrainer,
   editTrainer,
+  removePokemonType,
+  removePokemonFromTrainer,
+  removeTrainer,
+  removePokemon,
 };

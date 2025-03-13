@@ -8,7 +8,11 @@
     pokemonTypes.forEach(function(pokemonType) { %>
     <div class="pokemonTypesContainer">
       <li class="pokemonType"><%= pokemonType.type %></li>
-      <button class="pokemonTypeDeleteBtn">Delete</button>
+      <a
+        class="pokemonTypeDeleteBtn"
+        href="/pokemon-types/<%= pokemonType.type %>/delete"
+        >Delete</a
+      >
     </div>
     <% }) %> <% } %>
 

@@ -14,3 +14,9 @@ exports.createPokemonType = async (req, res) => {
   await db.addPokemonType(type);
   res.redirect("/pokemon-types");
 };
+
+exports.deletePokemonType = async (req, res) => {
+  const { pokemonType } = req.params;
+  await db.removePokemonType(pokemonType);
+  res.redirect('/pokemon-types')
+};

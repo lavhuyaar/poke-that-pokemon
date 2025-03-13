@@ -39,3 +39,9 @@ exports.updatePokemon = async (req, res) => {
   await db.editPokemon(name, type, type2, image);
   res.redirect("/pokemons");
 };
+
+exports.deletePokemon = async (req, res) => {
+  const {name} = req.params;
+  await db.removePokemon(name);
+  res.redirect('/pokemons');
+}
