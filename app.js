@@ -9,7 +9,7 @@ require("dotenv").config();
 const app = express();
 
 const PORT = process.env.SERVER_PORT || 8080;
-const assetsPath = path.join(__dirname, "public");
+const assetsPath = path.join(__dirname, "/public");
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");

@@ -1,6 +1,6 @@
 <html>
   <head>
-    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+    <link rel="stylesheet" href="/css/style.css" type="text/css" />
     <title><%= title %></title>
   </head>
 
@@ -26,7 +26,11 @@
             <a href="/pokemons/<%= pokemon.name %>" class="pokemonEditBtn"
               >Edit</a
             >
-            <a class="pokemonDeleteBtn" href="/pokemons/<%= pokemon.name%>/delete">Delete</a>
+            <a
+              class="pokemonDeleteBtn"
+              href="/pokemons/<%= pokemon.name%>/delete"
+              >Delete</a
+            >
           </div>
         </div>
         <% }) %> <% } %>
@@ -56,6 +60,7 @@
         <label for="image">Image</label>
         <input type="text" name="image" required />
         <button type="submit">Add</button>
+        <%- include("partials/errors.ejs") %>
       </form>
 
       <a href="/">Go back to Home Page</a>

@@ -1,7 +1,7 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+    <link rel="stylesheet" href="/css/style.css" type="text/css" />
   </head>
   <body>
     <% if(locals.trainers && locals.trainers.length > 0) { %> <%
@@ -12,7 +12,6 @@
       <a href="/trainers/<%= trainer.name%>/delete">Delete</a>
     </div>
     <% }) %> <% } %>
-
     <h3>Add Trainer</h3>
     <form action="/trainers/add" method="POST">
       <label for="name">Name:</label>
@@ -24,7 +23,7 @@
         <option value="<%= pokemon.name %>"><%= pokemon.name %></option>
         <% }) %> <% } %>
       </select>
-
+      <%- include("partials/errors.ejs") %>
       <button type="submit">Add</button>
     </form>
 

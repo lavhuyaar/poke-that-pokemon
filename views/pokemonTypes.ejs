@@ -1,7 +1,7 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+    <link rel="stylesheet" href="/css/style.css" type="text/css" />
   </head>
   <body>
     <% if(locals.pokemonTypes && locals.pokemonTypes.length > 0) { %> <%
@@ -20,6 +20,7 @@
     <form action="/pokemon-types/add" method="POST">
       <label for="type">Type:</label>
       <input type="text" name="type" id="type" required />
+      <%- include("partials/errors.ejs") %>
 
       <button type="submit">Add</button>
     </form>
